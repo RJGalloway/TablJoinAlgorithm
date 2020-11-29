@@ -12,7 +12,7 @@ public class Main
 
         if(args.length < 3)
         {
-            System.out.println("Arguments: int m, int n, int k.");
+            System.out.println("Usage: int m, int n, int k.");
             System.exit(1);
         }
         try
@@ -23,50 +23,46 @@ public class Main
         }
         catch (NumberFormatException e)
         {
-            System.err.println("Arguments: m n k must be an integers.");
+            System.err.println("Usage: m, n, and k must be an integers.");
             System.exit(1);
         }
 
         if((m <= 0 || k <= 0 || n <= 0) || (m > n || n > k))
         {
-            System.out.print("Arguments: m , n , k: m <= n <= k && m, n, k > 0");
+            System.out.print("Usage: m, n, and k must be m <= n <= k && m, n, k > 0");
             System.exit(1);
         }
+
         CreateArrays aM = new CreateArrays();
         CreateArrays aN = new CreateArrays();
+
         Integer [] arrN = aN.RandArrayCreator(n, k);
         Integer [] arrM = aM.RandArrayCreator(m,k);
+        
+        int [] newN = new int [arrN.length];
+        int [] newM = new int [arrM.length];
 
-        double startTimeT1, startTimeT2,startTimeT3,startTimeT4;
-        double endTimeT1, endTimeT2,endTimeT3,endTimeT4;
-        double totalTimeT1, totalTimeT2,totalTimeT3,totalTimeT4;
+        //Copy random arrays of type Integer to primitive type int
+        for(int i = 0; i < arrN.length; i++)
+        {
+            newN[i] = arrN[i];
+        }
+        for(int i = 0; i < arrM.length; i++)
+        {
+            newM[i] = arrM[i];
+        }
 
-        startTimeT1 = System.nanoTime();
-        ArrayList<Integer> arrOne = JoinTechniques.intersectionTechniqueOne(arrM, arrN);
-        endTimeT1 = System.nanoTime();
-        totalTimeT1 = (endTimeT1 - startTimeT1);
+        //Run the techniques on the inputs
+        ArrayList<Integer> arrOne = JoinTechniques.intersectionTechniqueOne(newM, newN);
         System.out.println("Resulting intersected was is size: " + arrOne.size());
-        System.out.println("Total Time Tech 1: " + (totalTimeT1 / 1_000_000_000) + "seconds");
 
-        startTimeT2 = System.nanoTime();
-        JoinTechniques.intersectionTechniqueTwo(arrM, arrN);
-        endTimeT2 = System.nanoTime();
-        totalTimeT2 = (endTimeT2 - startTimeT2);
-        System.out.println("Resulting intersected array is of size: " + arrOne.size());
-        System.out.println("Total Time Technique 2: " + (totalTimeT2/1_000_000_000) + " seconds");
+        ArrayList<Integer> arrTwo = JoinTechniques.intersectionTechniqueTwo(newM, newN);
+        System.out.println("Resulting intersected array is of size: " + arrTwo.size());
 
-        startTimeT3 = System.nanoTime();
-        JoinTechniques.intersectionTechniqueThree(arrM, arrN);
-        endTimeT3 = System.nanoTime();
-        totalTimeT3 = (endTimeT3 - startTimeT3);
-        System.out.println("Resulting intersected array is of size: " + arrOne.size());
-        System.out.println("Total Time Technique 3: " + (totalTimeT3/1_000_000_000) + " seconds");
+        ArrayList<Integer> arrThree = JoinTechniques.intersectionTechniqueThree(newM, newN);
+        System.out.println("Resulting intersected array is of size: " + arrThree.size());
 
-        startTimeT4 = System.nanoTime();
-        JoinTechniques.intersectionTechniqueFour(arrM, arrN);
-        endTimeT4 = System.nanoTime();
-        totalTimeT4 = (endTimeT4 - startTimeT4);
-        System.out.println("Resulting intersected array is of size: " + arrOne.size());
-        System.out.println("Total Time Technique 4: " + (totalTimeT4/1_000_000_000) + " seconds");
+        ArrayList<Integer> arrFour = JoinTechniques.intersectionTechniqueFour(newM, newN);
+        System.out.println("Resulting intersected array is of size: " + arrFour.size());
     }
 }
